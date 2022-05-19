@@ -1,0 +1,5 @@
+{
+    "ecl.launchConfiguration": "localhost",
+    "ecl.targetCluster": {},
+    "ecl.eclccPath": "C:\\Program Files\\HPCCSystems\\8.6.24\\clienttools\\bin\\eclcc.exe"
+}
