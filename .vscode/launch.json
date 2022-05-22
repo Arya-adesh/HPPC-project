@@ -4,6 +4,7 @@
     // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
     "version": "0.2.0",
     "configurations": [
+
         
 
         {
@@ -20,6 +21,21 @@
             "timeoutSecs": 60,
             "user": "Arya Adesh",
             "password": ""
+        },
+        {
+            "name": "mycluster",
+            "type": "ecl",
+            "request": "launch",
+            "protocol": "http",
+            "serverAddress": "10.102.239.228",
+            "port": 8010,
+            "path": "",
+            "targetCluster": "thor",
+            "rejectUnauthorized": true,
+            "resultLimit": 100,
+            "timeoutSecs": 60,
+            "user": "Arya Adesh",
+            "password": ""  
         }
     ]
 }

@@ -1,6 +1,7 @@
 IMPORT Python3 AS Python;
 anomaly:= $.File_dlof.File;
 dummy_rec:=RECORD
+   
     $.File_dlof.Layout.field1;
     $.File_dlof.Layout.field2;
     $.File_dlof.Layout.field3;
@@ -11,10 +12,12 @@ dummy_rec:=RECORD
     $.File_dlof.Layout.field8;
     $.File_dlof.Layout.field9;
     $.File_dlof.Layout.field10;
-    INTEGER NUM;
+    $.File_dlof.Layout.field11;
+    INTEGER numfactorial;
 END;
 dummy_rec change(anomaly L, INTEGER C):=TRANSFORM
-    SELF.NUM:=C;
+    
+    SELF.numfactorial:=0;
     SELF:=L;
 END;
 dummy_ds:=project(anomaly, change(LEFT,COUNTER));
@@ -82,13 +85,16 @@ STREAMED DATASET(dummy_rec) doFactorials(STREAMED DATASET(dummy_rec) recs, UNSIG
     # Check your input data and stored state and use assert to indicate errors.
     assert 'OBJECT' in globals(), 'facModule.doFactorial -- ERROR Expected OBJECT not defined.'
     try:
+        i=1;
         for recTuple in recs:
             # Extract the fields from the record. In this case
             # we only care about the first field 'num'.
-            num = recTuple[10]
+            num=recTuple[-1]
+            print(num)
+            
             # Yield a new record with the factorial included.
             # We use the stored factorialMgr to do the work.
-            yield (num, OBJECT.calcFactorial(int(num)))
+            yield (recTuple[0:10],calcFactorial(num) )
     except:
         exc = FORMAT_EXC('facModule.doFactorials')
         assert False, exc
@@ -110,7 +116,7 @@ MyDSComplete := doFactorials(MyDS, handle);
 
 // Output the results.  Note that, while the dataset has been completed,
 // the results are not sorted (if run on a multi node thor).
-
+//output(MyDS);
 OUTPUT(MyDSComplete, NAMED('Dataset_Complete'));
 
 // You may want to sort the final results after doing distributed operations.
